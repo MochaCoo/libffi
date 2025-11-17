@@ -1,7 +1,7 @@
 project('libffi', 'c', version : '3.4.4',
         meson_version : '>= 1.3.2',
         default_options : ['c_std=gnu99',
-                           'buildtype=debugoptimized',
+                           'buildtype=debugoptimized', # buildtype=debug
                            'warning_level=1'])
 
 fs = import('fs')
@@ -425,14 +425,14 @@ endif
 if not get_option('raw_api')
   ffi_conf.set('FFI_NO_RAW_API', 1)
 endif
-if get_option('exe_static_tramp')
+if get_option('exe_static_tramp') # do not allocate rwx memory
   if host_system == 'cygwin'
     # Only define static trampolines if we are using the cygwin runtime.
     # Will this need to be changed for mingw?
     if is_gnu_like
       ffi_conf.set('FFI_EXEC_STATIC_TRAMP', 1)
     endif
-  elif host_system == 'linux' and host_cpu_family in ['arm', 'aarch64', 'x86', 'x86_64', 'loongarch']
+  elif (host_system == 'linux' or host_system == 'android') and host_cpu_family in ['arm', 'aarch64', 'x86', 'x86_64', 'loongarch']
     ffi_conf.set('FFI_EXEC_STATIC_TRAMP', 1)
   endif
 endif

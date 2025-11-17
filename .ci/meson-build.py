@@ -11,8 +11,7 @@ from typing import List, Dict, Optional
 host = os.environ.get('HOST', '')
 
 def install_tools():
-    # FIXME: Use 0.64.0 when released
-    subprocess.check_call(['pip3', 'install', 'git+https://github.com/mesonbuild/meson'])
+    subprocess.check_call(['pip3', 'install', 'meson'])
     if not shutil.which('ninja'):
         subprocess.check_call(['pip3', 'install', 'ninja'])
 

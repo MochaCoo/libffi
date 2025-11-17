@@ -9,30 +9,10 @@ if [[ $RUNNER_OS != 'Linux' ]]; then
     brew install automake libtool dejagnu;
 
     # Download and extract the rlgl client
-    wget -qO - https://rl.gl/cli/rlgl-darwin-amd64.tgz | \
+    wget --no-check-certificate -qO - https://rl.gl/cli/rlgl-darwin-amd64.tgz | \
 	tar --strip-components=2 -xvzf - ./rlgl/rlgl;
 
 else
-    # Download and extract the rlgl client
-    case $HOST in
-	aarch64-linux-gnu)
-	    wget -qO - https://rl.gl/cli/rlgl-linux-arm.tgz | \
-		tar --strip-components=2 -xvzf - ./rlgl/rlgl;
-	    ;;
-	ppc64le-linux-gnu)
-	    wget -qO - https://rl.gl/cli/rlgl-linux-ppc64le.tgz | \
-		tar --strip-components=2 -xvzf - ./rlgl/rlgl;
-	    ;;
-	s390x-linux-gnu)
-	    wget -qO - https://rl.gl/cli/rlgl-linux-s390x.tgz | \
-		tar --strip-components=2 -xvzf - ./rlgl/rlgl;
-	    ;;
-	*)
-	    wget -qO - https://rl.gl/cli/rlgl-linux-amd64.tgz | \
-		tar --strip-components=2 -xvzf - ./rlgl/rlgl;
-	    ;;
-    esac
-
     sudo apt-get clean # clear the cache
     sudo apt-get update
 
